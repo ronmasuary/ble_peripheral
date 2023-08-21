@@ -128,7 +128,7 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
                 .build()
             val advertiseDataBuilder = AdvertiseData.Builder()
                 .setIncludeTxPowerLevel(false)
-                .setIncludeDeviceName(true)
+                .setIncludeDeviceName(false)
             services.forEach {
                 advertiseDataBuilder.addServiceUuid(ParcelUuid.fromString(it.value))
             }
