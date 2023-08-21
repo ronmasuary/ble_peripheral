@@ -132,7 +132,7 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
             services.forEach {
                 advertiseDataBuilder.addServiceUuid(ParcelUuid.fromString(it.value))
             }
-            serviceDatas.forEach { (t, u) ->  advertiseDataBuilder.addServiceData(ParcelUuid(t.toNative()),u)}
+            serviceDatas.forEach { (t, u) -> advertiseDataBuilder.addServiceData(ParcelUuid.fromString(t.value), u)}
 
             bluetoothLeAdvertiser?.startAdvertising(
                 advertiseSettings,
