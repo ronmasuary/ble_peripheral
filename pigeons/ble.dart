@@ -84,6 +84,7 @@ abstract class BlePeripheralChannel {
 
   void startAdvertising(
     List<UUID> services,
+    Map<UUID, Uint8List> serviceDatas,
     String localName,
   );
 

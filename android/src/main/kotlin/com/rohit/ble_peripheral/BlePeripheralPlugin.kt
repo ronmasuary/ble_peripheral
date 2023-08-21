@@ -104,7 +104,13 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
         addService(services.last().toGattService())
     }
 
-    override fun startAdvertising(services: List<UUID>, localName: String) {
+//    fun advertiseData(uuid: String, data: ByteArray) {
+//        return advertiseDataBuilder
+//                .addServiceData(ParcelUuid.fromString(uuid), data)
+//                .build();
+//    }
+
+    override fun startAdvertising(services: List<UUID>, serviceDatas: Map<UUID, ByteArray>, localName: String) {
         if (!isBluetoothEnabled()) {
             enableBluetooth()
             throw Exception("Bluetooth is not enabled")
@@ -126,6 +132,8 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
             services.forEach {
                 advertiseDataBuilder.addServiceUuid(ParcelUuid.fromString(it.value))
             }
+            serviceDatas.forEach { (t, u) ->  advertiseDataBuilder.addServiceData(ParcelUuid(t.toNative()),u)}
+
             bluetoothLeAdvertiser?.startAdvertising(
                 advertiseSettings,
                 advertiseDataBuilder.build(),

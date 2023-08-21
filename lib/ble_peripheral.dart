@@ -22,8 +22,9 @@ class BlePeripheral {
           BleCentral central, BleCharacteristic char, Uint8List value) =>
       _channel.updateCharacteristic(central, char, value);
 
-  Future<void> startAdvertising(List<UUID> services, String localName) =>
-      _channel.startAdvertising(services, localName);
+  Future<void> startAdvertising(List<UUID> services,
+          Map<UUID, Uint8List> serviceDatas, String localName) =>
+      _channel.startAdvertising(services, serviceDatas, localName);
 
   void setBleCallback(BleCallback callback) => BleCallback.setup(callback);
 }
