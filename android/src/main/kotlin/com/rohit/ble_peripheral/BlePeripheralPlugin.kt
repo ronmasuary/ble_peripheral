@@ -68,7 +68,7 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
 
 
     override fun initialize() {
-        if (!validatePermission()) throw Exception("Bluetooth Permission not granted")
+//        if (!validatePermission()) throw Exception("Bluetooth Permission not granted")
         handler = Handler(applicationContext.mainLooper)
         bluetoothManager =
             applicationContext.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -186,11 +186,8 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
     private fun validatePermission(): Boolean {
         val permissionsList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             arrayOf(
-                Manifest.permission.BLUETOOTH_ADMIN,
-                Manifest.permission.BLUETOOTH,
-                Manifest.permission.BLUETOOTH_SCAN,
-                Manifest.permission.BLUETOOTH_CONNECT,
                 Manifest.permission.BLUETOOTH_ADVERTISE,
+                Manifest.permission.BLUETOOTH_CONNECT
             )
         } else {
             arrayOf(
