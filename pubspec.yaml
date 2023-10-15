@@ -6,7 +6,7 @@ repository: https://github.com/rohitsangwan01/ble_peripheral
 issue_tracker: https://github.com/rohitsangwan01/ble_peripheral/issues
 
 environment:
-  sdk: '>=3.0.1 <4.0.0'
+  sdk: '>=2.19.0 <4.0.0'
   flutter: ">=3.3.0"
 
 dependencies:
