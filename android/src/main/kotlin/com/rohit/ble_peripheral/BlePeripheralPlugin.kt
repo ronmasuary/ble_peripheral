@@ -113,7 +113,6 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
     override fun startAdvertising(services: List<UUID>, serviceDatas: Map<UUID, ByteArray>, localName: String) {
         if (!isBluetoothEnabled()) {
             enableBluetooth()
-            throw Exception("Bluetooth is not enabled")
         }
         while (servicesToAdd.peek() != null) {
             Log.e(TAG, "Waiting for service to be added")
