@@ -34,6 +34,7 @@ class HomeController extends GetxController {
     await _blePeripheral.addServices([_batteryService]);
     await _blePeripheral.startAdvertising(
       [serviceBattery],
+      {},
       deviceName,
     );
   }

@@ -52,14 +52,21 @@ private class BlePeripheralDarwin: NSObject, BlePeripheralChannel, CBPeripheralM
         }
     }
 
-    func startAdvertising(services: [UUID], localName: String) throws {
+    func startAdvertising(services: [UUID], serviceDatas: [UUID: [UInt8]], localName: String) throws {
         let cbServices = services.map { uuidString in
             CBUUID(string: uuidString.value)
         }
-        peripheralManager.startAdvertising([
-            CBAdvertisementDataServiceUUIDsKey: cbServices,
-            CBAdvertisementDataLocalNameKey: localName,
-        ])
+        var advertisementData: [String: Any] = [:]
+        var serviceDataArray: [CBUUID: Data] = [:]
+        
+        for (uuid, data) in serviceDatas {
+            serviceDataArray[CBUUID(string: uuid.value)] = NSData(data)
+        }
+        
+        advertisementData[CBAdvertisementDataServiceDataKey] = serviceDataArray
+        
+        advertisementData[CBAdvertisementDataLocalNameKey] = localName
+        peripheralManager.startAdvertising(advertisementData)
     }
 
     func stopAdvertising() throws {
