@@ -27,10 +27,11 @@ flutter:
         pluginClass: BlePeripheralPlugin
       ios:
         pluginClass: BlePeripheralPlugin
-        sharedDarwinSource: true
+        # sharedDarwinSource: true
+        sharedIosSource: true
       macos:
         pluginClass: BlePeripheralPlugin
-        sharedDarwinSource: true
+        sharedIosSource: true
       linux:
         pluginClass: BlePeripheralPlugin  
       windows:

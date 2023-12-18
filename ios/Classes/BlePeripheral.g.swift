@@ -34,6 +34,12 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 
+extension UUID: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.value)
+    }
+}
+
 /// Models
 ///
 /// Generated class from Pigeon that represents data sent in messages.

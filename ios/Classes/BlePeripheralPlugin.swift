@@ -22,6 +22,7 @@ public class BlePeripheralPlugin: NSObject, FlutterPlugin {
 }
 
 private class BlePeripheralDarwin: NSObject, BlePeripheralChannel, CBPeripheralManagerDelegate {
+    
     var bleCallback: BleCallback
     lazy var peripheralManager: CBPeripheralManager = .init(delegate: self, queue: nil, options: nil)
     var cbCentrals = [CBCentral]()
@@ -52,21 +53,22 @@ private class BlePeripheralDarwin: NSObject, BlePeripheralChannel, CBPeripheralM
         }
     }
 
-    func startAdvertising(services: [UUID], serviceDatas: [UUID: [UInt8]], localName: String) throws {
-        let cbServices = services.map { uuidString in
-            CBUUID(string: uuidString.value)
-        }
-        var advertisementData: [String: Any] = [:]
-        var serviceDataArray: [CBUUID: Data] = [:]
+    func startAdvertising(services: [UUID], serviceDatas: [UUID : FlutterStandardTypedData], localName: String) throws {
+        // let cbServices = services.map { uuidString in
+        //     CBUUID(string: uuidString.value)
+        // }
+        // var advertisementData: [String: Any] = [:]
+        // var serviceDataArray: [CBUUID: Data] = [:]
         
-        for (uuid, data) in serviceDatas {
-            serviceDataArray[CBUUID(string: uuid.value)] = NSData(data)
-        }
+        // for (uuid, data) in serviceDatas {
+        //     serviceDataArray[CBUUID(string: uuid.value)] = NSData(data)
+        // }
         
-        advertisementData[CBAdvertisementDataServiceDataKey] = serviceDataArray
+        // advertisementData[CBAdvertisementDataServiceDataKey] = serviceDataArray
         
-        advertisementData[CBAdvertisementDataLocalNameKey] = localName
-        peripheralManager.startAdvertising(advertisementData)
+        // advertisementData[CBAdvertisementDataLocalNameKey] = localName
+        // peripheralManager.startAdvertising(advertisementData)
+        print("startAdvertising called")
     }
 
     func stopAdvertising() throws {
