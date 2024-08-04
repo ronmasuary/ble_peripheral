@@ -147,9 +147,9 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
     }
 
     override fun stopAdvertising() {
-        if (!isBluetoothEnabled()) {
-            enableBluetooth()
-        }
+//        if (!isBluetoothEnabled()) {
+//            enableBluetooth()
+//        }
         handler.post {
             try {
                 bluetoothLeAdvertiser?.stopAdvertising(advertiseCallback)
