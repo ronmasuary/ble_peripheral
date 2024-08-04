@@ -152,15 +152,15 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
         }
         handler.post {
             try {
-                bluetoothLeAdvertiser!!.stopAdvertising(advertiseCallback)
-                if (gattServer != null) {
-                    val devices: Set<BluetoothDevice> = devices
-                    for (device in devices) {
-                        gattServer!!.cancelConnection(device)
-                    }
+                bluetoothLeAdvertiser?.stopAdvertising(advertiseCallback)
+//                if (gattServer != null) {
+//                    val devices: Set<BluetoothDevice> = devices
+//                    for (device in devices) {
+//                        gattServer!!.cancelConnection(device)
+//                    }
 //                    gattServer!!.close()
 //                    gattServer = null
-                }
+//                }
             } catch (ignored: IllegalStateException) {
                 throw Exception("Bluetooth Adapter is not turned ON")
             }
