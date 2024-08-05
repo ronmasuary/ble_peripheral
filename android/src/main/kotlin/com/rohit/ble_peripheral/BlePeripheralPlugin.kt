@@ -68,17 +68,22 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
 
 
     override fun initialize() {
-//        if (!validatePermission()) throw Exception("Bluetooth Permission not granted")
-        handler = Handler(applicationContext.mainLooper)
-        bluetoothManager =
-            applicationContext.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        val bluetoothAdapter = bluetoothManager.adapter
-            ?: throw UnsupportedOperationException("Bluetooth is not available.")
-        bluetoothLeAdvertiser = bluetoothAdapter.bluetoothLeAdvertiser
-        if (bluetoothLeAdvertiser == null) throw UnsupportedOperationException("Bluetooth LE Advertising not supported on this device.")
-        gattServer = bluetoothManager.openGattServer(applicationContext, gattServerCallback)
-        if (gattServer == null) throw UnsupportedOperationException("gattServer is null, check Bluetooth is ON.")
-        bleCallback?.onBleStateChange(isBluetoothEnabled()) {}
+        // if (!validatePermission()) throw Exception("Bluetooth Permission not granted")
+        if (applicationContext == null) {
+            throw Exception("Application context is null")
+        }
+        applicationContext?.let {
+            handler = Handler(it.mainLooper)
+            bluetoothManager =
+                it.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+            val bluetoothAdapter = bluetoothManager?.adapter
+                ?: throw UnsupportedOperationException("Bluetooth is not available.")
+            bluetoothLeAdvertiser = bluetoothAdapter.bluetoothLeAdvertiser
+            if (bluetoothLeAdvertiser == null) throw UnsupportedOperationException("Bluetooth LE Advertising not supported on this device.")
+            gattServer = bluetoothManager?.openGattServer(it, gattServerCallback)
+            if (gattServer == null) throw UnsupportedOperationException("gattServer is null, check Bluetooth is ON.")
+            bleCallback?.onBleStateChange(isBluetoothEnabled()) {}
+        }
     }
 
     //TODO: Implement the following methods
