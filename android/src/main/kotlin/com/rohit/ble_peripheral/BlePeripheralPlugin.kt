@@ -123,13 +123,14 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
             Log.e(TAG, "Waiting for service to be added")
         }
         handler.post { // set up advertising setting
-            bluetoothManager.adapter.name = localName
+            //
+//            bluetoothManager.adapter.name = localName
             val advertiseSettings = AdvertiseSettings.Builder()
                 .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
                 .setConnectable(true)
                 .setTimeout(0)
                 .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
-                .build()
+
             val advertiseDataBuilder = AdvertiseData.Builder()
                 .setIncludeTxPowerLevel(false)
                 .setIncludeDeviceName(false)
@@ -144,7 +145,7 @@ class BlePeripheralPlugin : FlutterPlugin, BlePeripheralChannel, ActivityAware,
             }
 
             bluetoothLeAdvertiser?.startAdvertising(
-                advertiseSettings,
+                advertiseSettings.build(),
                 advertiseDataBuilder.build(),
                 advertiseCallback
             )
