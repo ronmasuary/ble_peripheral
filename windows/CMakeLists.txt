@@ -18,9 +18,18 @@ if(NOT NUGET_EXE)
     message(FATAL_ERROR "Please install this executable, and run CMake again.")
 endif()
 
-exec_program(${NUGET_EXE}
-        ARGS install "Microsoft.Windows.CppWinRT" -Version 2.0.201102.2 -ExcludeVersion -OutputDirectory ${CMAKE_BINARY_DIR}/packages)
-
+# Updated: Use execute_process instead of deprecated exec_program
+execute_process(
+    COMMAND ${NUGET_EXE} install "Microsoft.Windows.CppWinRT" -Version 2.0.201102.2 -ExcludeVersion -OutputDirectory ${CMAKE_BINARY_DIR}/packages
+    RESULT_VARIABLE NUGET_RESULT
+    OUTPUT_VARIABLE NUGET_OUTPUT
+    ERROR_VARIABLE NUGET_ERROR
+)
+if(NOT NUGET_RESULT EQUAL 0)
+    message("NuGet output: ${NUGET_OUTPUT}")
+    message("NuGet error: ${NUGET_ERROR}")
+    message(FATAL_ERROR "NuGet package installation failed with exit code ${NUGET_RESULT}")
+endif()
 
 # Any new source files that you add to the plugin should be added here.
 list(APPEND PLUGIN_SOURCES
@@ -55,7 +64,6 @@ set_target_properties(${PLUGIN_NAME} PROPERTIES
         )
 
 target_link_libraries(${PLUGIN_NAME} PRIVATE ${CMAKE_BINARY_DIR}/packages/Microsoft.Windows.CppWinRT/build/native/Microsoft.Windows.CppWinRT.targets)
-
 
 # Source include directories and library dependencies. Add any plugin-specific
 # dependencies here.
