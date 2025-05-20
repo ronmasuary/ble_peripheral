@@ -1,14 +1,14 @@
 #include "ble_peripheral_plugin.h"
 // This must be included before many other Windows headers.
 #include <windows.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.Devices.Radios.h>
-#include <winrt/Windows.Devices.Bluetooth.h>
-#include <winrt/Windows.Devices.Bluetooth.Advertisement.h>
-#include <winrt/Windows.Devices.Bluetooth.GenericAttributeProfile.h>
-#include <winrt/Windows.Devices.Enumeration.h>
+// #include <winrt/Windows.Foundation.h>
+// #include <winrt/Windows.Foundation.Collections.h>
+// #include <winrt/Windows.Storage.Streams.h>
+// #include <winrt/Windows.Devices.Radios.h>
+// #include <winrt/Windows.Devices.Bluetooth.h>
+// #include <winrt/Windows.Devices.Bluetooth.Advertisement.h>
+// #include <winrt/Windows.Devices.Bluetooth.GenericAttributeProfile.h>
+// #include <winrt/Windows.Devices.Enumeration.h>
 
 // For getPlatformVersion; remove unless needed for your plugin implementation.
 #include <VersionHelpers.h>
@@ -42,11 +42,11 @@ namespace ble_peripheral
 
   BlePeripheralPlugin::~BlePeripheralPlugin() {}
 
-  winrt::fire_and_forget BlePeripheralPlugin::InitializeAdapter()
+  void BlePeripheralPlugin::InitializeAdapter()
   {
-    auto bluetoothAdapter = co_await BluetoothAdapter::GetDefaultAsync();
-    bluetoothRadio = co_await bluetoothAdapter.GetRadioAsync();
-    bluetoothLEPublisher = BluetoothLEAdvertisementPublisher();
+    // auto bluetoothAdapter = co_await BluetoothAdapter::GetDefaultAsync();
+    // bluetoothRadio = co_await bluetoothAdapter.GetRadioAsync();
+    // bluetoothLEPublisher = BluetoothLEAdvertisementPublisher();
     // status_changed_token = bluetoothLEPublisher.StatusChanged(
     //     winrt::auto_revoke,
     //     [this](BluetoothLEAdvertisementPublisher sender, BluetoothLEAdvertisementPublisherStatusChangedEventArgs args)
@@ -98,26 +98,27 @@ namespace ble_peripheral
 
   std::optional<FlutterError> BlePeripheralPlugin::StartAdvertising(
       const flutter::EncodableList &services,
+      const flutter::EncodableMap& service_datas,
       const std::string &local_name)
   {
 
-    Advertisement::BluetoothLEManufacturerData manufacturerData = Advertisement::BluetoothLEManufacturerData();
-    manufacturerData.CompanyId(0xFFFE);
-    auto dataWriter = DataWriter();
-    dataWriter.WriteBytes("Test");
-    manufacturerData.Data(dataWriter.DetachBuffer());
+    // Advertisement::BluetoothLEManufacturerData manufacturerData = Advertisement::BluetoothLEManufacturerData();
+    // manufacturerData.CompanyId(0xFFFE);
+    // auto dataWriter = DataWriter();
+    // dataWriter.WriteBytes("Test");
+    // manufacturerData.Data(dataWriter.DetachBuffer());
 
-    bluetoothLEPublisher.Advertisement().ManufacturerData().Append(manufacturerData);
-    bluetoothLEPublisher.Start();
-    std::cout << "StartAdvertising called" << std::endl;
+    // bluetoothLEPublisher.Advertisement().ManufacturerData().Append(manufacturerData);
+    // bluetoothLEPublisher.Start();
+    // std::cout << "StartAdvertising called" << std::endl;
     return std::nullopt;
   }
 
   std::optional<FlutterError> BlePeripheralPlugin::StopAdvertising()
   {
     std::cout << "StopAdvertising called" << std::endl;
-    bluetoothLEPublisher.Advertisement().ManufacturerData().Clear();
-    bluetoothLEPublisher.Stop();
+    // bluetoothLEPublisher.Advertisement().ManufacturerData().Clear();
+    // bluetoothLEPublisher.Stop();
     return std::nullopt;
   }
 

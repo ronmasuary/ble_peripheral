@@ -2,14 +2,14 @@
 #define FLUTTER_PLUGIN_BLE_PERIPHERAL_PLUGIN_H_
 
 #include <windows.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.Devices.Radios.h>
-#include <winrt/Windows.Devices.Bluetooth.h>
-#include <winrt/Windows.Devices.Bluetooth.Advertisement.h>
-#include <winrt/Windows.Devices.Bluetooth.GenericAttributeProfile.h>
-#include <winrt/Windows.Devices.Enumeration.h>
+// #include <winrt/Windows.Foundation.h>
+// #include <winrt/Windows.Foundation.Collections.h>
+// #include <winrt/Windows.Storage.Streams.h>
+// #include <winrt/Windows.Devices.Radios.h>
+// #include <winrt/Windows.Devices.Bluetooth.h>
+// #include <winrt/Windows.Devices.Bluetooth.Advertisement.h>
+// #include <winrt/Windows.Devices.Bluetooth.GenericAttributeProfile.h>
+// #include <winrt/Windows.Devices.Enumeration.h>
 
 #include <flutter/method_channel.h>
 #include <flutter/plugin_registrar_windows.h>
@@ -18,15 +18,15 @@
 
 namespace ble_peripheral
 {
-    using namespace winrt;
-    using namespace winrt::Windows::Foundation;
-    using namespace winrt::Windows::Foundation::Collections;
-    using namespace winrt::Windows::Storage::Streams;
-    using namespace winrt::Windows::Devices::Radios;
-    using namespace winrt::Windows::Devices::Bluetooth;
-    using namespace winrt::Windows::Devices::Bluetooth::Advertisement;
-    using namespace winrt::Windows::Devices::Bluetooth::GenericAttributeProfile;
-    using namespace winrt::Windows::Devices::Enumeration;
+    // using namespace winrt;
+    // using namespace winrt::Windows::Foundation;
+    // using namespace winrt::Windows::Foundation::Collections;
+    // using namespace winrt::Windows::Storage::Streams;
+    // using namespace winrt::Windows::Devices::Radios;
+    // using namespace winrt::Windows::Devices::Bluetooth;
+    // using namespace winrt::Windows::Devices::Bluetooth::Advertisement;
+    // using namespace winrt::Windows::Devices::Bluetooth::GenericAttributeProfile;
+    // using namespace winrt::Windows::Devices::Enumeration;
 
     using flutter::EncodableMap;
     using flutter::EncodableValue;
@@ -45,12 +45,12 @@ namespace ble_peripheral
         BlePeripheralPlugin &operator=(const BlePeripheralPlugin &) = delete;
 
         // BluetoothLe
-        winrt::fire_and_forget InitializeAdapter();
+        void InitializeAdapter();
 
-        Radio bluetoothRadio{nullptr};
+        int bluetoothRadio;
 
-        BluetoothLEAdvertisementPublisher bluetoothLEPublisher{nullptr};
-        winrt::event_token status_changed_token;
+        int bluetoothLEPublisher;
+        int status_changed_token;
 
         // BlePeripheralChannel
 
@@ -66,6 +66,7 @@ namespace ble_peripheral
 
         std::optional<FlutterError> StartAdvertising(
             const flutter::EncodableList &services,
+            const flutter::EncodableMap& service_datas,
             const std::string &local_name) override;
 
         std::optional<FlutterError> UpdateCharacteristic(
